@@ -58,8 +58,8 @@ int calc()
    n50=ii-1;  //counting from 0
    l50=rlen[n50]; 
 
-  std::cout << std::fixed << std::setprecision(0) <<  "Bases= " << bases << " n= "<< n << " ave= " 
-	<< mean << " largest= " << max << " l50= "<< l50 << " n50= " << n50+1   //counting from 1
+  std::cout << std::fixed << std::setprecision(0) <<  "Bases= " << bases << " contigs= "<< n << " mean_length= " 
+	<< mean << " longest= " << max << " l50= "<< l50 << " n50= " << n50+1   //counting from 1
 	<< std::endl;  
 
   return 0;
