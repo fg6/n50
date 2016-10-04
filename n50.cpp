@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
   }
   
   int mlines=myread(argv[1]); //does not work with seq on multi-lines! but a lot faster!
-  
+
   if(mlines)
   	readseqs();
   calc();  
@@ -115,13 +115,15 @@ int myread(char* file)   //FILE *namef)
 
 
   std::string line; 
-  getline(infile,line);
+  getline(infile,line); //first line: name
   if(line.at(0)==fq[0]) readevery=4;  // fastq input file
   else if(line.at(0)==fa[0]) readevery=2;  // fasta input file
-  else std::cout << " Error: cannot determine if input file is fasta or fastq " << std::endl;
-
-  getline(infile,line);
-  getline(infile,line);
+  else {
+	if(0)std::cout << " Error: cannot determine if input file is fasta or fastq, probably a gzipped file?" << std::endl;
+	return(1);
+  }
+  getline(infile,line); //sec line: seq
+  getline(infile,line); // 3rd line: + or new name
 
 
   if(line.at(0)!=plus[0]){ 
