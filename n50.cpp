@@ -7,7 +7,6 @@
 #include <numeric> // accumulate
 #include <iomanip>  //setprecision
 #include <fstream>
-#include <sstream>
 
 static gzFile fp;
 static  std::vector<int> rlen;
