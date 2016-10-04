@@ -91,7 +91,7 @@ int readseqs(){
   seq = kseq_init(fp);
   rlen.reserve(300000);
 
-  if(0)std::cout << " ...using kseq to read file" << std::endl;
+  if(1)std::cout << " ...using kseq to read file" << std::endl;
 
   while ((l = kseq_read(seq)) >= 0) 
     rlen.push_back(seq->seq.l);
@@ -110,6 +110,7 @@ int myread(char* file)   //FILE *namef)
   char fa[5]={">"};
   char plus[5]={"+"};
   int readevery=1;
+  int pri=0;
   std::ifstream infile(file);
   rlen.reserve(300000);
 
@@ -119,18 +120,18 @@ int myread(char* file)   //FILE *namef)
   if(line.at(0)==fq[0]) readevery=4;  // fastq input file
   else if(line.at(0)==fa[0]) readevery=2;  // fasta input file
   else {
-	if(0)std::cout << " Error: cannot determine if input file is fasta or fastq, probably a gzipped file?" << std::endl;
+	if(pri)std::cout << " Error: cannot determine if input file is fasta or fastq, probably a gzipped file?" << std::endl;
 	return(1);
   }
   getline(infile,line); //sec line: seq
   getline(infile,line); // 3rd line: + or new name
 
 
-  if(line.at(0)!=plus[0]){ 
-	if(0)std::cout<< "Sequences on multiple lines..." << std::endl;  // seq on single line 
+  if(line.at(0)!=plus[0] && line.at(0)!=fa[0]){ 
+	if(pri)std::cout<< "Sequences on multiple lines..." << std::endl;  // seq on single line 
 	return(1);
   }else{
-        if(0)std::cout<< "Sequences on single line " << std::endl;
+        if(pri)std::cout<< "Sequences on single line " << std::endl;
   }
 
   int nseq=-1;
