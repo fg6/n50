@@ -91,7 +91,7 @@ int readseqs(){
   seq = kseq_init(fp);
   rlen.reserve(300000);
 
-  if(1)std::cout << " ...using kseq to read file" << std::endl;
+  if(0)std::cout << " ...using kseq to read file" << std::endl;
 
   while ((l = kseq_read(seq)) >= 0) 
     rlen.push_back(seq->seq.l);
@@ -147,7 +147,7 @@ int myread(char* file)   //FILE *namef)
     getline(infile,name);
     getline(infile,seq);
     if(pri)if(nseq<10)std::cout << nseq << " " << name << " " << seq.length() << std::endl;
-    rlen.push_back(seq.length());
+    if(seq.length()>0)rlen.push_back(seq.length());
 
     if(readevery==4) { //for fastq
           getline(infile,line);
