@@ -8,6 +8,8 @@
 #include <iomanip>  //setprecision
 #include <fstream>
 
+#include <gzstream.h>
+
 static gzFile fp;
 static  std::vector<int> rlen;
 
@@ -28,9 +30,10 @@ int main(int argc, char *argv[])
     printf("ERROR main:: missing input file  !! \n");
     return 1;
   }
+
   
-  //int mlines=myread(argv[1]); //does not work with seq on multi-lines! but a lot faster!
-  int mlines=1;
+  int mlines=myread(argv[1]); //does not work with seq on multi-lines! but a lot faster!
+  //int mlines=1;
   if(mlines)
   	readseqs();
   calc();  
@@ -111,51 +114,57 @@ int myread(char* file)   //FILE *namef)
   char plus[5]={"+"};
   int readevery=1;
   int pri=0;
-  std::ifstream infile(file);
+  //std::ifstream infile(file);
   rlen.reserve(300000);
+  igzstream infile(file);
 
-
-  std::string line; 
-  getline(infile,line); //first line: name
-  if(line.at(0)==fq[0]) {
-	readevery=4;  // fastq input file	
-  }
-  else if(line.at(0)==fa[0]) {readevery=2;}  // fasta input file
-  else {
-	if(pri)std::cout << " Error: cannot determine if input file is fasta or fastq, probably a gzipped file?" << std::endl;
-	return(1);
-  }
-  getline(infile,line); //sec line: seq
-  getline(infile,line); // 3rd line: + or new name
-
-
-  if(line.at(0)!=plus[0] && line.at(0)!=fa[0]){ 
-	if(pri)std::cout<< "Sequences on multiple lines..." << std::endl;  // seq on single line 
-	return(1);
+/*
+  std::string line;
+  getline(infile1,line); //first line: name
+  if(line.at(0)==fq[0] || line.at(0)==fa[0]){
+        infile.clear();  // start reading from first line again
+        infile.seekg (0, std::ios::beg);
+	std::ifstream infile(file);
   }else{
-        if(pri)std::cout<< "Sequences on single line " << std::endl;
-  }
+        if(pri)std::cout << " Error: cannot determine if input file is fasta or fastq, probably a gzipped file?" << std::endl;
+        infile.close();
+//      igzstream infile(file); 
+        //return(1);
+  }*/
 
+  int isfq=0;
   int nseq=0;
-  infile.clear();  // start over
-  infile.seekg (0, std::ios::beg);
   while (!infile.eof()){
     std::string seq;
     std::string name;
+    std::string line;
     nseq++;
     getline(infile,name);
     getline(infile,seq);
-    if(pri)if(nseq<20)std::cout << nseq << " " << name << " " << seq.length() << std::endl;
+
+    if(0)if(nseq<5)std::cout << nseq << " " << name << " " << seq.length() << std::endl;
     if(seq.length())rlen.push_back(seq.length());
 
-    if(readevery==4) { //for fastq
+    if(isfq) { 
           getline(infile,line);
           getline(infile,seq);
-         if(pri)if(nseq<20)std::cout << nseq << " " << name << " " << line << std::endl;
+          if(0)if(nseq<5)std::cout << nseq << " " << name << " " << line << std::endl;
     }
+
+    if(nseq==1){
+        getline(infile,line);
+        if(line.at(0)==plus[0]) isfq=1;
+	if( !isfq && line.at(0)!=fa[0]) {
+		if(pri)std::cout<< "Sequences on multiple lines..." << std::endl;  // seq on single line 
+		rlen.clear();
+	        return(1);
+	}
+	getline(infile,line);
+	if(!isfq)rlen.push_back(line.length());
+    }
+
   }
   if(pri)std::cout << "Total sequences: " << nseq << std::endl;
-
 
 
  return 0;
