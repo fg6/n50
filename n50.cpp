@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
   }
   
   int mlines=myread(argv[1]); //does not work with seq on multi-lines! but a lot faster!
-
+  //int mlines=1;
   if(mlines)
   	readseqs();
   calc();  
@@ -117,7 +117,10 @@ int myread(char* file)   //FILE *namef)
 
   std::string line; 
   getline(infile,line); //first line: name
-  if(line.at(0)==fq[0]) readevery=4;  // fastq input file
+  if(line.at(0)==fq[0]) {
+	readevery=4;  // fastq input file
+	std::cout << " fastq file!"<< std::endl;
+  }
   else if(line.at(0)==fa[0]) readevery=2;  // fasta input file
   else {
 	if(pri)std::cout << " Error: cannot determine if input file is fasta or fastq, probably a gzipped file?" << std::endl;
@@ -135,17 +138,26 @@ int myread(char* file)   //FILE *namef)
   }
 
   int nseq=-1;
-  int readnext=1;
   infile.clear();  // start over
   infile.seekg (0, std::ios::beg);
-  while (getline(infile,line))
-   {
-     nseq++;
-     if(nseq==readnext){
-      rlen.push_back(line.length());
-      readnext+=readevery;
-     }
-   }
+  while (!infile.eof()){
+    std::string seq;
+    std::string name;
+    nseq++;
+    getline(infile,name);
+    getline(infile,seq);
+    if(nseq<10)std::cout << nseq << " " << name << " " << seq.length() << std::endl;
+    rlen.push_back(seq.length());
+
+    if(readevery==4) { //for fastq
+          getline(infile,line);
+          getline(infile,line);
+    }
+  }
+//  std::cout << "Total sequences: " << nseq-1 << std::endl;
+
+
+
  return 0;
 }
 
