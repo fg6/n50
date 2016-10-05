@@ -119,7 +119,7 @@ int myread(char* file)   //FILE *namef)
   getline(infile,line); //first line: name
   if(line.at(0)==fq[0]) {
 	readevery=4;  // fastq input file
-	std::cout << " fastq file!"<< std::endl;
+	//std::cout << " fastq file!"<< std::endl;
   }
   else if(line.at(0)==fa[0]) readevery=2;  // fasta input file
   else {
@@ -146,7 +146,7 @@ int myread(char* file)   //FILE *namef)
     nseq++;
     getline(infile,name);
     getline(infile,seq);
-    if(nseq<10)std::cout << nseq << " " << name << " " << seq.length() << std::endl;
+    if(pri)if(nseq<10)std::cout << nseq << " " << name << " " << seq.length() << std::endl;
     rlen.push_back(seq.length());
 
     if(readevery==4) { //for fastq
