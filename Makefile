@@ -2,13 +2,13 @@
 #	 Makefile
 #
 CC=g++
-SOURCES= n50.cpp
+SOURCES= n50.cpp 
 
 INCLUDES = 
 LIBS =  
 
 CFLAGS= -c  $(INCLUDES) 
-COMPILE = $(CC) $(CFLAGS)
+COMPILE = $(CC) $(CFLAGS)  
 
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=$(SOURCES:.cpp=)
@@ -22,7 +22,7 @@ oprint:
 
 # compile source	
 $(EXECUTABLE): $(OBJECTS) 
-	$(CC) $(OBJECTS) -lz -o $@
+	$(CC) -std=c++11 $(OBJECTS) -lgzstream -lz -o $@
 
 
 # create *.o
