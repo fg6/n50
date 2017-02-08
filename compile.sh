@@ -1,4 +1,4 @@
-mygzstream=~/software/GZSTREAM/gzstream
+mygzstream=
 
 check=`echo ${CPLUS_INCLUDE_PATH} | grep gzstream`
 
