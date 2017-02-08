@@ -1,4 +1,4 @@
-#include "/nfs/users/nfs_f/fg6/ana/cpp/fastn50/readfastaq.h"
+#include "readfastaq.h"
 #include <numeric> // accumulate
 
 
