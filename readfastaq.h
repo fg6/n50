@@ -37,11 +37,12 @@ int fasttype(char* file)
 
 
 // ---------------------------------------- //
-int readfastq(char* file, int readseq=0, int minlen=0, string selctg="")
+int readfastq(char* file, int saveinfo=0, int readseq=0, int minlen=0, string selctg="")
 // ---------------------------------------- //
 { 
   igzstream infile(file);
   char fq[5]={"@"};
+  char fa[5]={">"};
   char plus[5]={"+"};
   int nseq=0;
 
@@ -73,12 +74,21 @@ int readfastq(char* file, int readseq=0, int minlen=0, string selctg="")
 
       if(nseq>1){ // previous
 	if(seqlen>=minlen){
-	  rname.push_back(lname);
-	  if(lcomment.size())rcomment.push_back(lcomment);
-	  rlen.push_back(seqlen);
-	  if(readseq)rseq.push_back(lseq);
-	  if(readseq)rqual.push_back(lqual);
-	
+
+	  if(saveinfo){
+	    rname.push_back(lname);
+	    if(lcomment.size())rcomment.push_back(lcomment);
+	    rlen.push_back(seqlen);
+	    if(readseq)rseq.push_back(lseq);
+	    if(readseq)rqual.push_back(lqual);
+	  }
+
+
+	  //cout << fa << lname ;
+	  // if(lcomment.size()) cout << lcomment <<endl;
+	  // else cout << endl;
+	  
+	  
 	  if(quallen != seqlen)
 	    cout << " ERROR! seq length different from quality lenght!! " << endl;
 	}
@@ -121,12 +131,14 @@ int readfastq(char* file, int readseq=0, int minlen=0, string selctg="")
     // EOF
     if(infile.eof()){ // previous
       if(seqlen>=minlen){
-	rname.push_back(lname);
-	if(lcomment.size())rcomment.push_back(lcomment);
-	rlen.push_back(seqlen);
-	if(readseq)rseq.push_back(lseq);
-	if(readseq)rqual.push_back(lqual);
 
+	if(saveinfo){
+	  rname.push_back(lname);
+	  if(lcomment.size())rcomment.push_back(lcomment);
+	  rlen.push_back(seqlen);
+	  if(readseq)rseq.push_back(lseq);
+	  if(readseq)rqual.push_back(lqual);
+	}
 	if(quallen != seqlen)
 	  cout << " ERROR! seq length different from quality lenght!! " << endl;
       }
@@ -141,7 +153,7 @@ int readfastq(char* file, int readseq=0, int minlen=0, string selctg="")
 
 
 // ---------------------------------------- //
-int readfasta(char* file, int readseq=0, int minlen=0, string selctg="")
+int readfasta(char* file, int saveinfo=0, int readseq=0, int minlen=0, string selctg="")
 // ---------------------------------------- //
 { 
   igzstream infile(file);
@@ -169,10 +181,15 @@ int readfasta(char* file, int readseq=0, int minlen=0, string selctg="")
 
       if(nseq>1){ // previous
 	if(seqlen>=minlen){
-	  rname.push_back(lname);
-	  rlen.push_back(seqlen);
-	  if(readseq)rseq.push_back(lseq);
-	  if(lcomment.size())rcomment.push_back(lcomment);
+
+	  if(saveinfo){
+	    rname.push_back(lname);
+	    rlen.push_back(seqlen);
+	    if(readseq)rseq.push_back(lseq);
+	    if(lcomment.size())rcomment.push_back(lcomment);
+	  }
+
+
 	}
       }
       
@@ -201,10 +218,16 @@ int readfasta(char* file, int readseq=0, int minlen=0, string selctg="")
     // EOF
     if(infile.eof()){ // previous
       if(seqlen>=minlen){
-	rname.push_back(lname);
-	rlen.push_back(seqlen);
-	if(readseq)rseq.push_back(lseq);
-	if(lcomment.size())rcomment.push_back(lcomment);
+
+
+	if(saveinfo){
+	  rname.push_back(lname);
+	  rlen.push_back(seqlen);
+	  if(readseq)rseq.push_back(lseq);
+	  if(lcomment.size())rcomment.push_back(lcomment);
+	}      
+
+
       }
       stop=0;
     }
