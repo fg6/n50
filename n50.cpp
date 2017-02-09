@@ -22,9 +22,9 @@ int main(int argc, char *argv[])
   int isfq=fasttype(argv[1]);
 
   if(!isfq)
-     err=readfasta(argv[1]);
+     err=readfasta(argv[1],1); // save info (contig names and length) in vectors
   else
-     err=readfastq(argv[1]);
+     err=readfastq(argv[1],1);
 
   if(!err)calc();  
 
