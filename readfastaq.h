@@ -28,7 +28,7 @@ int fasttype(char* file)
   char fa[5]={">"};
   string ttname;
   int isfq=0;
-  //igzstream infile(file);
+
   std::ifstream infile(file);
 
   getline(infile,ttname);
@@ -49,7 +49,7 @@ bool fexists(const std::string& filename) {
 int readfastq(char* file, int saveinfo=0, int readseq=0, int minlen=0, string selctg="")
 // ---------------------------------------- //
 { 
-  //igzstream infile(file);
+
   std::ifstream infile(file);
   char fq[5]={"@"};
   char fa[5]={">"};
@@ -166,7 +166,7 @@ int readfastq(char* file, int saveinfo=0, int readseq=0, int minlen=0, string se
 int readfasta(char* file, int saveinfo=0, int readseq=0, int minlen=0, string selctg="")
 // ---------------------------------------- //
 { 
-  //igzstream infile(file);
+
   std::ifstream infile(file);
   char fa[5]={">"};
   int nseq=0;
