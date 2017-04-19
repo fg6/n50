@@ -22,7 +22,7 @@ oprint:
 
 # compile source	
 $(EXECUTABLE): $(OBJECTS) 
-	$(CC) -std=c++11 $(OBJECTS) -lgzstream -lz -o $@
+	$(CC) -std=c++11 $(OBJECTS) -lz -o $@
 
 
 # create *.o

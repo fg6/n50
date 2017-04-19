@@ -11,16 +11,15 @@ int main(int argc, char *argv[])
    fprintf(stderr, "Usage: %s <reads.fq/fa>\n", argv[0]);
    return 1;
   }	
-  if((fp = gzopen(argv[1],"r")) == NULL){ 
+  if ( ! fexists(argv[1]) ){
     printf("ERROR main:: missing input file  !! \n");
     return 1;
-  }
+  } 
 
   int err=1;
 
   // File type	
   int isfq=fasttype(argv[1]);
-
   if(!isfq)
      err=readfasta(argv[1],1); // save info (contig names and length) in vectors
   else

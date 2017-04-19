@@ -1,7 +1,8 @@
 #include <iomanip>  //setprecision
 #include <algorithm>    // sort, reverse
-#include <gzstream.h>
 #include <vector>  //setprecision
+#include <iostream> //cout
+#include <fstream> //fstream
 
 
 using std::cout;
@@ -9,12 +10,14 @@ using std::endl;
 using std::vector;
 using std::string;
 
-static gzFile fp;
+
 static  vector<int> rlen;
 static  vector<string> rseq;
 static  vector<string> rqual;
 static  vector<string> rname;
 static  vector<string> rcomment;
+
+
 
 
 // ---------------------------------------- //
@@ -25,7 +28,8 @@ int fasttype(char* file)
   char fa[5]={">"};
   string ttname;
   int isfq=0;
-  igzstream infile(file);
+  //igzstream infile(file);
+  std::ifstream infile(file);
 
   getline(infile,ttname);
   string ftype=ttname.substr(0,1);
@@ -35,12 +39,18 @@ int fasttype(char* file)
   return(isfq);
 }
 
+bool fexists(const std::string& filename) {
+  std::ifstream ifile(filename.c_str());
+  return (bool)ifile;
+}
+
 
 // ---------------------------------------- //
 int readfastq(char* file, int saveinfo=0, int readseq=0, int minlen=0, string selctg="")
 // ---------------------------------------- //
 { 
-  igzstream infile(file);
+  //igzstream infile(file);
+  std::ifstream infile(file);
   char fq[5]={"@"};
   char fa[5]={">"};
   char plus[5]={"+"};
@@ -156,7 +166,8 @@ int readfastq(char* file, int saveinfo=0, int readseq=0, int minlen=0, string se
 int readfasta(char* file, int saveinfo=0, int readseq=0, int minlen=0, string selctg="")
 // ---------------------------------------- //
 { 
-  igzstream infile(file);
+  //igzstream infile(file);
+  std::ifstream infile(file);
   char fa[5]={">"};
   int nseq=0;
 
