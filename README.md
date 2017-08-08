@@ -5,9 +5,9 @@ Usage: ./n50 \<reads.fastq/fasta(.gz)\>
 
 
 Requirements:
-- gzstream in the CPLUS_INCLUDE_PATH
+- zlib
+- tested with gcc 4.9.2
   
 To compile:
-- source ./compile.sh 
-  this will check if gzstream is available in the CPLUS_INCLUDE_PATH and them compile
-  otherwise please include the full path to gzstream in the mygzstream on the first line of compile.sh
+- ./install.sh
+
