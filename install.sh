@@ -29,6 +29,8 @@ if [[ ! -d  mylibs/gzstream ]]  || [[ ! -f mylibs/gzstream/gzstream.o ]]; then
 	else  echo  " Gzstream test failed. Exiting now"; exit; fi
     fi
 fi
+
+cd $thisdir
  
 if [[ ! -f mylibs/gzstream/gzstream.o ]]; then 
 	echo "  !! Error: gzstream not installed properly!"; 
