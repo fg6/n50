@@ -4,7 +4,7 @@
 CC=g++
 SOURCES= n50.cpp 
 
-INCLUDES = 
+INCLUDES = -Imylibs/gzstream/ 
 LIBS =  
 
 CFLAGS= -c  $(INCLUDES) 
@@ -22,7 +22,7 @@ oprint:
 
 # compile source	
 $(EXECUTABLE): $(OBJECTS) 
-	$(CC) -std=c++11 $(OBJECTS) -lgzstream -lz -o $@
+	$(CC) -std=c++11 $(OBJECTS) -Lmylibs/gzstream/ -lgzstream -lz -o $@
 
 
 # create *.o
