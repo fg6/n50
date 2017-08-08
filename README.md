@@ -11,3 +11,10 @@ Requirements:
 To compile:
 - ./install.sh
 
+Output:
+- Bases: total number of bases found in the file
+- contigs: total number of contigs/scaffolds/reads found
+- mean_length: mean lenght of contigs/scaffolds/reads
+- longest: longest contig/scaffold/read
+- N50: contig/scaffold/read N50
+- n: number of contigs/scaffolds/reads contributing to the N50
