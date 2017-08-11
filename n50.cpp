@@ -40,8 +40,8 @@ int calc()
 
   int n=rlen.size();
   int max=rlen[0];                 	
-  float bases = accumulate(rlen.begin(), rlen.end(), 0.0);
-  float mean = bases / n;
+  long int  bases = accumulate(rlen.begin(), rlen.end(), 0.0);
+  float mean = bases*1. / n;
 
   int n50=0,l50=0;
   int done=0;
